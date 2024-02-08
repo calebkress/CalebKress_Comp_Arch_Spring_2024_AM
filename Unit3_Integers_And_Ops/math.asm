@@ -33,32 +33,32 @@ asm_main:
         enter   0,0               ; setup routine
         pusha
 
-        mov     eax, prompt
-        call    print_string
+        mov     eax, prompt       ; setup prompt to be printed
+        call    print_string      ; print prompt
 
-        call    read_int
-        mov     [input], eax
+        call    read_int          ; reading int from user
+        mov     [input], eax      ; moving eax into [input]
 
         imul    eax               ; edx:eax = eax * eax
         mov     ebx, eax          ; save answer in ebx
-        mov     eax, square_msg
+        mov     eax, square_msg   ; setup square message
+        call    print_string      ; print square message
+        mov     eax, ebx          ; eax = ebx
+        call    print_int         ; print eax (squared #)
+        call    print_nl          ; print newline
+
+        mov     ebx, eax          ; ebx = eax (number ^ 2)
+        imul    ebx, [input]      ; ebx *= [input] (number ^3)
+        mov     eax, cube_msg     ; print out prompt
         call    print_string
-        mov     eax, ebx
+        mov     eax, ebx          ; print out number ^ 3
         call    print_int
         call    print_nl
 
-        mov     ebx, eax
-        imul    ebx, [input]      ; ebx *= [input]
-        mov     eax, cube_msg
+        imul    ecx, ebx, 25      ; ecx = ebx * 25
+        mov     eax, cube25_msg   ; print out prompt
         call    print_string
-        mov     eax, ebx
-        call    print_int
-        call    print_nl
-
-        imul    ecx, ebx, 25      ; ecx = ebx*25
-        mov     eax, cube25_msg
-        call    print_string
-        mov     eax, ecx
+        mov     eax, ecx          ; print out cube * 25
         call    print_int
         call    print_nl
 
@@ -67,23 +67,23 @@ asm_main:
         mov     ecx, 100          ; can't divide by immediate value
         idiv    ecx               ; edx:eax / ecx
         mov     ecx, eax          ; save quotient into ecx
-        mov     eax, quot_msg
+        mov     eax, quot_msg     ; print out quotient msg
         call    print_string
-        mov     eax, ecx
-        call    print_int
+        mov     eax, ecx          ; move quotient into eax
+        call    print_int         ; print out quotient
         call    print_nl
-        mov     eax, rem_msg
-        call    print_string
-        mov     eax, edx
-        call    print_int
-        call    print_nl
+        mov     eax, rem_msg      ; print out remainder msg
+        call    print_string      ; 
+        mov     eax, edx          ; 
+        call    print_int         ; 
+        call    print_nl          ; 
         
         neg     edx               ; negate the remainder
-        mov     eax, neg_msg
-        call    print_string
-        mov     eax, edx
-        call    print_int
-        call    print_nl
+        mov     eax, neg_msg      ; 
+        call    print_string      ; 
+        mov     eax, edx          ; 
+        call    print_int         ; 
+        call    print_nl          ; 
 
         popa
         mov     eax, 0            ; return back to C
